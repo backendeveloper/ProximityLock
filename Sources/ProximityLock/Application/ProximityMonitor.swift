@@ -37,6 +37,7 @@ final class ProximityMonitor {
             presentThreshold: config.presentThreshold
         )
 
+        syncTrackedDevice(from: config)
         setupBindings()
     }
 
@@ -86,6 +87,14 @@ final class ProximityMonitor {
         }
     }
 
+    private func syncTrackedDevice(from config: AppConfiguration) {
+        if let idString = config.watchIdentifier, let uuid = UUID(uuidString: idString) {
+            scanner.trackedDeviceIdentifier = uuid
+        } else {
+            scanner.trackedDeviceIdentifier = nil
+        }
+    }
+
     private func applyConfiguration(_ config: AppConfiguration) {
         emaFilter = ExponentialMovingAverage(alpha: config.emaAlpha)
         hysteresisEvaluator = HysteresisEvaluator(
@@ -96,6 +105,7 @@ final class ProximityMonitor {
             lockTimeout: config.lockTimeout,
             signalLossTimeout: config.signalLossTimeout
         )
+        syncTrackedDevice(from: config)
         Log.config.info("Applied new configuration")
     }
 

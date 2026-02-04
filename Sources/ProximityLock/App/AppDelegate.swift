@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Log.app.info("ProximityLock starting up")
+        registerSleepWakeNotifications()
 
         configStore = JSONConfigurationStore()
         do {
@@ -69,7 +70,40 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         proximityMonitor?.stop()
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
         Log.app.info("ProximityLock shutting down")
+    }
+
+    private func registerSleepWakeNotifications() {
+        let center = NSWorkspace.shared.notificationCenter
+        center.addObserver(
+            self,
+            selector: #selector(handleSleep),
+            name: NSWorkspace.willSleepNotification,
+            object: nil
+        )
+        center.addObserver(
+            self,
+            selector: #selector(handleWake),
+            name: NSWorkspace.didWakeNotification,
+            object: nil
+        )
+    }
+
+    @objc private func handleSleep() {
+        Log.app.info("System going to sleep, switching to regular activation policy")
+        NSApp.setActivationPolicy(.regular)
+    }
+
+    @objc private func handleWake() {
+        Log.app.info("System woke up, restoring accessory activation policy")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            NSApp.setActivationPolicy(.accessory)
+            // Hide dock icon that may have appeared briefly
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                NSApp.hide(nil)
+            }
+        }
     }
 }
 

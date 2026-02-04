@@ -3,6 +3,7 @@ import XCTest
 
 final class MockBluetoothScanner: BluetoothScanning {
     weak var delegate: BluetoothScanningDelegate?
+    var trackedDeviceIdentifier: UUID?
     var isScanning = false
     private var devices: [WatchDevice] = []
 

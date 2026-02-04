@@ -8,6 +8,7 @@ protocol BluetoothScanningDelegate: AnyObject {
 protocol BluetoothScanning: AnyObject {
     var delegate: BluetoothScanningDelegate? { get set }
     var isScanning: Bool { get }
+    var trackedDeviceIdentifier: UUID? { get set }
     func startScanning()
     func stopScanning()
     func discoveredDevices() -> [WatchDevice]

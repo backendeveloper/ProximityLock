@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.proximity-lock</string>
+    <key>CFBundleName</key>
+    <string>ProximityLock</string>
+    <key>CFBundleDisplayName</key>
+    <string>ProximityLock</string>
+    <key>CFBundleExecutable</key>
+    <string>ProximityLock</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>ProximityLock uses Bluetooth to detect your Apple Watch proximity and lock the screen when you walk away.</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+</dict>
+</plist>

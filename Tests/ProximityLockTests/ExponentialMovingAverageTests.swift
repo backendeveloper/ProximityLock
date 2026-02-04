@@ -57,6 +57,6 @@ final class ExponentialMovingAverageTests: XCTestCase {
         XCTAssertEqual(ema.currentValue, -60.0)
 
         _ = ema.update(with: -70.0)
-        XCTAssertEqual(ema.currentValue, -65.0, accuracy: 0.001)
+        XCTAssertEqual(ema.currentValue!, -65.0, accuracy: 0.001)
     }
 }
